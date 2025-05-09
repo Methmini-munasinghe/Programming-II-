@@ -20,3 +20,19 @@ int getLetterIndex(char letters[], char letter) {
     }
     return -1;
 }
+// Caesar encryption
+void encryptText(char letters[], const char *inputText, char *encryptedText, int shiftKey) {
+    int length = ALPHABET;
+    for (int i = 0; inputText[i] != '\0'; i++) {
+        char currentChar = inputText[i];
+        if (isalpha(currentChar)) {
+            char upper = toupper(currentChar);
+            int index = getLetterIndex(letters, upper);
+            int shiftedIndex = (index + shiftKey + length) % length;
+            encryptedText[i] = isupper(currentChar) ? letters[shiftedIndex] : tolower(letters[shiftedIndex]);
+        } else {
+            encryptedText[i] = currentChar;
+        }
+    }
+    encryptedText[strlen(inputText)]='\0';
+}
