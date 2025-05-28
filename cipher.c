@@ -11,7 +11,7 @@ void initializeQueue(char letters[], int *front, int *rear) {
     }
 }
 
-// Find the index of a letter
+// Find the index of a letter in the alphabet
 int getLetterIndex(char letters[], char letter) {
     for (int i = 0; i < ALPHABET; i++) {
         if (letters[i] == letter) {
@@ -24,32 +24,30 @@ int getLetterIndex(char letters[], char letter) {
 void encryptText(char letters[], const char *inputText, char *encryptedText, int shiftKey) {
     int length = ALPHABET;
     for (int i = 0; inputText[i] != '\0'; i++) {
-        char currentChar = inputText[i];
+        char currentChar = toupper(inputText[i]);
         if (isalpha(currentChar)) {
-            char upper = toupper(currentChar);
-            int index = getLetterIndex(letters, upper);
-            int shiftedIndex = (index + shiftKey + length) % length;
-            encryptedText[i] = isupper(currentChar) ? letters[shiftedIndex] : tolower(letters[shiftedIndex]);
+            int index = getLetterIndex(letters, currentChar);
+            int newIndex = (index + shiftKey) % length;
+            encryptedText[i] = isupper(inputText[i]) ? letters[newIndex] : tolower(letters[newIndex]);
         } else {
-            encryptedText[i] = currentChar;
+            encryptedText[i] = inputText[i]; // preserve non-letter characters
         }
     }
-    encryptedText[strlen(inputText)]='\0';
+    encryptedText[strlen(inputText)] = '\0';
 }
 
 // Caesar decryption
 void decryptText(char letters[], const char *encryptedText, char *decryptedText, int shiftKey) {
     int length = ALPHABET;
     for (int i = 0; encryptedText[i] != '\0'; i++) {
-        char currentChar = encryptedText[i];
+        char currentChar = toupper(encryptedText[i]);
         if (isalpha(currentChar)) {
-            char upper = toupper(currentChar);
-            int index = getLetterIndex(letters, upper);
+            int index = getLetterIndex(letters, currentChar);
             int originalIndex = (index - shiftKey + length) % length;
-            decryptedText[i] = isupper(currentChar) ? letters[originalIndex] : tolower(letters[originalIndex]);
+            decryptedText[i] = isupper(encryptedText[i]) ? letters[originalIndex] : tolower(letters[originalIndex]);
         } else {
-            decryptedText[i] = currentChar;
+            decryptedText[i] = encryptedText[i]; // preserve non-letter characters
         }
     }
-    decryptedText[strlen(encryptedText)] = '\0';
+    decryptedText[strlen(encryptedText)] = '\0';
 }
