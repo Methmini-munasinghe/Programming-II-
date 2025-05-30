@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include <string.h>
 #include <ctype.h>
 #include "cipher.h"
@@ -21,6 +20,7 @@ int getLetterIndex(char letters[], char letter) {
     }
     return -1;
 }
+
 // Caesar encryption
 void encryptText(char letters[], const char *inputText, char *encryptedText, int shiftKey) {
     int length = ALPHABET;
@@ -35,8 +35,9 @@ void encryptText(char letters[], const char *inputText, char *encryptedText, int
             encryptedText[i] = currentChar;
         }
     }
-    encryptedText[strlen(inputText)]='\0';
-=======
+    encryptedText[strlen(inputText)] = '\0';
+}
+
 // Caesar decryption
 void decryptText(char letters[], const char *encryptedText, char *decryptedText, int shiftKey) {
     int length = ALPHABET;
@@ -52,5 +53,4 @@ void decryptText(char letters[], const char *encryptedText, char *decryptedText,
         }
     }
     decryptedText[strlen(encryptedText)] = '\0';
->>>>>>> decryption-feature-section
 }
